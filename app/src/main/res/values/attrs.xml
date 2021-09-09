@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomizableGenericButton">
+        <attr name="button_title_text_size" format="dimension" />
+        <attr name="button_subtitle_text_size" format="dimension" />
+        <attr name="button_title_font_family" format="reference" />
+        <attr name="button_subtitle_font_family" format="reference" />
+        <attr name="button_title_text_color" format="color"/>
+        <attr name="button_subtitle_text_color" format="color"/>
+
+        <attr name="button_background_tint" format="color"/>
+        <attr name="button_icon" format="reference" />
+
+
+        <attr name="button_gradient_start_tint" format="color"/>
+        <attr name="button_gradient_end_tint" format="color"/>
+
+        <attr name="button_style" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="outlined" value="1" />
+            <enum name="gradient" value="2" />
+        </attr>
+
+        <attr name="button_type" format="enum">
+            <enum name="only_title" value="0" />
+            <enum name="with_subtitle" value="1" />
+            <enum name="with_subtitle_and_icon" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>
