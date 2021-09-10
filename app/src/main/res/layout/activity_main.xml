@@ -7,22 +7,44 @@
     tools:context=".MainActivity">
 
     <me.erfandp.buttondp.CustomizableGenericButton
+        android:id="@+id/customizableGenericButton3"
         style="@style/Widget.AppTheme.CustomizableGenericButton.Outlined"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        app:button_subtitle_text="this is subtitle"
+        app:button_title_text="this is title"
+        app:button_type="with_subtitle_and_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/customizableGenericButton2"
+        app:layout_constraintStart_toStartOf="@+id/customizableGenericButton2"
+        app:layout_constraintTop_toBottomOf="@+id/customizableGenericButton2" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+    <me.erfandp.buttondp.CustomizableGenericButton
+        android:id="@+id/customizableGenericButton2"
+        style="@style/Widget.AppTheme.CustomizableGenericButton.Gradient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:button_subtitle_text="this is subtitle"
+        app:button_title_text="this is title"
+        app:button_type="with_subtitle_and_icon"
+        app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton3"
+        app:layout_constraintEnd_toEndOf="@+id/customizableGenericButton"
+        app:layout_constraintStart_toStartOf="@+id/customizableGenericButton"
+        app:layout_constraintTop_toBottomOf="@+id/customizableGenericButton" />
+
+    <me.erfandp.buttondp.CustomizableGenericButton
+        android:id="@+id/customizableGenericButton"
+        style="@style/Widget.AppTheme.CustomizableGenericButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:button_subtitle_text="this is subtitle"
+        app:button_title_text="this is title"
+        app:button_type="with_subtitle_and_icon"
+        app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
