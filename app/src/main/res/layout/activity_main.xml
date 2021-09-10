@@ -10,7 +10,7 @@
         android:id="@+id/customizableGenericButton3"
         style="@style/Widget.AppTheme.CustomizableGenericButton.Outlined"
         android:layout_width="wrap_content"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         app:button_subtitle_text="this is subtitle"
         app:button_title_text="this is title"
         app:button_type="with_subtitle_and_icon"
@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="@+id/customizableGenericButton2"
         app:layout_constraintTop_toBottomOf="@+id/customizableGenericButton2" />
 
+
     <me.erfandp.buttondp.CustomizableGenericButton
         android:id="@+id/customizableGenericButton2"
         style="@style/Widget.AppTheme.CustomizableGenericButton.Gradient"
@@ -26,7 +27,9 @@
         android:layout_height="wrap_content"
         app:button_subtitle_text="this is subtitle"
         app:button_title_text="this is title"
-        app:button_type="with_subtitle_and_icon"
+        app:button_type="with_subtitle"
+        app:button_gradient_start_tint="@color/teal_700"
+        app:button_gradient_end_tint="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton3"
         app:layout_constraintEnd_toEndOf="@+id/customizableGenericButton"
         app:layout_constraintStart_toStartOf="@+id/customizableGenericButton"
@@ -39,7 +42,8 @@
         android:layout_height="wrap_content"
         app:button_subtitle_text="this is subtitle"
         app:button_title_text="this is title"
-        app:button_type="with_subtitle_and_icon"
+        app:button_type="only_title"
+        app:button_background_tint="@color/teal_700"
         app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

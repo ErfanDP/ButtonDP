@@ -1,7 +1,11 @@
 package me.erfandp.buttondp
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -10,15 +14,13 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.content.res.getResourceIdOrThrow
 
 class CustomizableGenericButton(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
 ): ConstraintLayout(context, attrs, defStyleAttr) {
-	constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0) {}
+	constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 	
 	//attributes
 	private var buttonType = ButtonTypes.ONLY_TITLE
@@ -32,6 +34,11 @@ class CustomizableGenericButton(
 	private var buttonIconRoundedCorner = true
 	private var buttonBackgroundTint: Int =
 		ContextCompat.getColor(context, R.color.buttondp_style_normal)
+	private var buttonBackgroundGradientStartColor =
+		ContextCompat.getColor(context, R.color.buttondp_style_gradient_start)
+	private var buttonBackgroundGradientEndColor =
+		ContextCompat.getColor(context, R.color.buttondp_style_gradient_end)
+	
 	
 	//views initialized in init block
 	private val buttonTitleView: TextView
@@ -39,13 +46,40 @@ class CustomizableGenericButton(
 	private val buttonIconView: ImageView
 	private val buttonRoot: ConstraintLayout
 	
-	//high-order function invoked on touch action ACTION.UP
+	/**
+	 * 	high-order function invoked on touch event ACTION.UP
+	 */
 	var onClickListener: (() -> Unit)? = null
+	
+	/**
+	 * animation called on touch event ACTION.DOWN and End on ACTION.UP
+	 *
+	 * it's recommended to use animations with repeatCount of ValueAnimator.INFINITE
+	 * this animation will keep playing till touch event ACTION.UP is called
+	 **/
+	var onTouchAnimatorSet = AnimatorSet().also {
+		// rotate o degree then 1 degree and so on for one loop of rotation.
+		val objectAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 1f, 0f, -1f, 0f)
+		objectAnimator.repeatCount = ValueAnimator.INFINITE
+		objectAnimator.duration = 150
+		it.play(objectAnimator)
+	}
+	
+	/**
+	 * animation called on touch event ACTION.UP
+	 *
+	 * it's NOT recommended to  use animations with repeatCount of ValueAnimator.INFINITE
+	 **/
+	var onCLickAnimatorSet = AnimatorSet().also {
+		val objectAnimatorOne = ObjectAnimator.ofFloat(this, "scaleX", 1F, 1.05F, 1F)
+		val objectAnimatorTwo = ObjectAnimator.ofFloat(this, "scaleY", 1F, 1.05F, 1F)
+		objectAnimatorOne.duration = 300
+		objectAnimatorTwo.duration = 300
+		it.playTogether(objectAnimatorOne, objectAnimatorTwo)
+	}
 	
 	init {
 		val view = View.inflate(context, R.layout.customizable_generic_button_layout, this)
-		//for preventing animation effects from showing on corners of view
-		view.clipToOutline = true
 		
 		//find and initialize views
 		buttonTitleView = view.findViewById(R.id.buttondp_title)
@@ -55,8 +89,12 @@ class CustomizableGenericButton(
 		
 		initAttributes(attrs, context)
 		initViews()
+		
 	}
 	
+	/**
+	 * initialize views based on given attributes
+	 */
 	private fun initViews() {
 		initButtonStyles(buttonStyles)
 		initButtonTexts()
@@ -76,13 +114,22 @@ class CustomizableGenericButton(
 	private fun initButtonStyles(buttonStyles: ButtonStyles) {
 		buttonRoot.background = when (buttonStyles) {
 			ButtonStyles.OUTLINED -> {
-				ContextCompat.getDrawable(context, R.drawable.buttondp_style_outlined)
+				val drawable = ContextCompat.getDrawable(context, R.drawable.buttondp_style_outlined)
+				drawable?.setTint(buttonBackgroundTint)
+				drawable
 			}
 			ButtonStyles.GRADIENT -> {
-				ContextCompat.getDrawable(context, R.drawable.buttondp_style_gradient)
+				val gradientDrawable :GradientDrawable = ContextCompat.getDrawable(context, R.drawable
+					.buttondp_style_gradient) as GradientDrawable
+				gradientDrawable.colors = arrayOf(buttonBackgroundGradientStartColor,
+					buttonBackgroundGradientEndColor).toIntArray()
+				gradientDrawable
+				
 			}
 			ButtonStyles.NORMAL -> {
-				ContextCompat.getDrawable(context, R.drawable.buttondp_style_normal)
+				val drawable = ContextCompat.getDrawable(context, R.drawable.buttondp_style_normal)
+				drawable?.setTint(buttonBackgroundTint)
+				drawable
 			}
 		}
 	}
@@ -108,6 +155,7 @@ class CustomizableGenericButton(
 		}
 	}
 	
+	
 	private fun initAttributes(attrs: AttributeSet?, context: Context) {
 		attrs?.let {
 			val typedArray =
@@ -128,11 +176,31 @@ class CustomizableGenericButton(
 					)
 				)
 				
-				val imageTintColorResource = typedArray.getResourceId(
-					R.styleable.CustomizableGenericButton_button_background_tint,
-					R.color.buttondp_style_normal
-				)
-				buttonBackgroundTint = ContextCompat.getColor(context, imageTintColorResource)
+				//Background related attribute
+				when (buttonStyles) {
+					ButtonStyles.GRADIENT -> {
+						val startTintColorResource = typedArray.getResourceId(
+							R.styleable.CustomizableGenericButton_button_gradient_start_tint,
+							R.color.buttondp_style_gradient_start)
+						buttonBackgroundGradientStartColor = ContextCompat.getColor(
+							context,
+							startTintColorResource)
+						val endTintColorResource = typedArray.getResourceId(
+							R.styleable.CustomizableGenericButton_button_gradient_end_tint,
+							R.color.buttondp_style_gradient_end
+						)
+						buttonBackgroundGradientEndColor = ContextCompat.getColor(
+							context,
+							endTintColorResource)
+					}
+					else -> {
+						val tintColorResource = typedArray.getResourceId(
+							R.styleable.CustomizableGenericButton_button_background_tint,
+							R.color.buttondp_style_normal
+						)
+						buttonBackgroundTint = ContextCompat.getColor(context, tintColorResource)
+					}
+				}
 				
 				//title related attributes
 				typedArray.getString(R.styleable.CustomizableGenericButton_button_title_text)
@@ -173,34 +241,29 @@ class CustomizableGenericButton(
 		}
 	}
 	
-	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-		//TODO
+	
+	override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+		when (ev?.action) {
+			MotionEvent.ACTION_DOWN -> {
+				onTouch()
+				return true
+			}
+			MotionEvent.ACTION_UP -> {
+				onClick()
+			}
+		}
+		return super.dispatchTouchEvent(ev)
 	}
 	
-	override fun onTouchEvent(event: MotionEvent?): Boolean {
-		when (event?.action) {
-			MotionEvent.ACTION_DOWN -> onTouch()
-			MotionEvent.ACTION_UP -> onClick()
-		}
-		return super.onTouchEvent(event)
+	
+	private fun onTouch() {
+		onTouchAnimatorSet.start()
 	}
 	
 	private fun onClick() {
-		playClickAnimation()
+		onTouchAnimatorSet.end()
+		onCLickAnimatorSet.start()
 		onClickListener?.invoke()
-	}
-	
-	private fun onTouch() {
-		playTouchAnimation()
-	}
-	
-	private fun playTouchAnimation() {
-		//TODO
-	}
-	
-	private fun playClickAnimation() {
-		//TODO
 	}
 	
 	private fun setButtonTypeWithAttrValues(buttonTypeAttr: Int) {

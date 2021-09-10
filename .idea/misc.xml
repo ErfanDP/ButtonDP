@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/background_round_corner_8dp.xml" value="0.2833333333333333" />
+        <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/button_anim_effect.xml" value="0.23541666666666666" />
+        <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/button_gradient_click_effect.xml" value="0.23541666666666666" />
         <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/buttondp_style_gradient.xml" value="0.2833333333333333" />
         <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/buttondp_style_normal.xml" value="0.4036458333333333" />
         <entry key="..\:/ErfanDP/programming/projects/ButtonDP/app/src/main/res/drawable/buttondp_style_outlined.xml" value="0.4036458333333333" />
