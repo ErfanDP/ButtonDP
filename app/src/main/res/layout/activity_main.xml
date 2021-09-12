@@ -1,54 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_host_container"
+    android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <me.erfandp.buttondp.CustomizableGenericButton
-        android:id="@+id/customizableGenericButton3"
-        style="@style/Widget.AppTheme.CustomizableGenericButton.Outlined"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:button_subtitle_text="this is subtitle"
-        app:button_title_text="this is title"
-        app:button_type="with_subtitle_and_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/customizableGenericButton2"
-        app:layout_constraintStart_toStartOf="@+id/customizableGenericButton2"
-        app:layout_constraintTop_toBottomOf="@+id/customizableGenericButton2" />
-
-
-    <me.erfandp.buttondp.CustomizableGenericButton
-        android:id="@+id/customizableGenericButton2"
-        style="@style/Widget.AppTheme.CustomizableGenericButton.Gradient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:button_subtitle_text="this is subtitle"
-        app:button_title_text="this is title"
-        app:button_type="with_subtitle"
-        app:button_gradient_start_tint="@color/teal_700"
-        app:button_gradient_end_tint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton3"
-        app:layout_constraintEnd_toEndOf="@+id/customizableGenericButton"
-        app:layout_constraintStart_toStartOf="@+id/customizableGenericButton"
-        app:layout_constraintTop_toBottomOf="@+id/customizableGenericButton" />
-
-    <me.erfandp.buttondp.CustomizableGenericButton
-        android:id="@+id/customizableGenericButton"
-        style="@style/Widget.AppTheme.CustomizableGenericButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:button_subtitle_text="this is subtitle"
-        app:button_title_text="this is title"
-        app:button_type="only_title"
-        app:button_background_tint="@color/teal_700"
-        app:layout_constraintBottom_toTopOf="@+id/customizableGenericButton2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@color/activity_background"
+    app:defaultNavHost="true"
+    app:navGraph="@navigation/nav_graph" />

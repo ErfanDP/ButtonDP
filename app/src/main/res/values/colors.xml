@@ -8,9 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="activity_background">#FAF1FF</color>
     <color name="buttondp_style_normal">#70D260</color>
     <color name="buttondp_text_normal">#000000</color>
-    <color name="buttondp_style_outlined">#FF31EA</color>
+    <color name="buttondp_style_outlined">#B68B07</color>
     <color name="buttondp_style_gradient_start">#2A4CC2</color>
     <color name="buttondp_style_gradient_end">#236975</color>
 </resources>

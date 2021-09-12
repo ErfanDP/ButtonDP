@@ -3,9 +3,10 @@
     <color name="black">#FFFFFFFF</color>
     <color name="white">#FF000000</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="activity_background">#1C1B29</color>
     <color name="buttondp_style_normal">#163911</color>
     <color name="buttondp_text_normal">#FFFFFF</color>
-    <color name="buttondp_style_outlined">#673AB7</color>
+    <color name="buttondp_style_outlined">#CDDC39</color>
     <color name="buttondp_style_gradient_start">#06123A</color>
     <color name="buttondp_style_gradient_end">#2F6068</color>
 </resources>

@@ -1,19 +1,21 @@
-package me.erfandp.buttondp
+package me.erfandp.buttondp.customizableGenericButtonLib
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import me.erfandp.buttondp.R
+import me.erfandp.buttondp.utils.extentions.getColorCompat
+import me.erfandp.buttondp.utils.extentions.getDrawableCompat
 
 class CustomizableGenericButton(
 	context: Context,
@@ -26,18 +28,18 @@ class CustomizableGenericButton(
 	private var buttonType = ButtonTypes.ONLY_TITLE
 	private var buttonStyles = ButtonStyles.NORMAL
 	private var buttonTitleText = context.getString(R.string.button_title)
-	private var buttonTitleTextColor = ContextCompat.getColor(context, R.color.buttondp_text_normal)
+	private var buttonTitleTextColor = context.getColorCompat(R.color.buttondp_text_normal)
 	private var buttonSubtitleText = context.getString(R.string.button_subtitle)
-	private var buttonSubtitleTextColor =
-		ContextCompat.getColor(context, R.color.buttondp_text_normal)
+	private var buttonSubtitleTextColor = context.getColorCompat(R.color.buttondp_text_normal)
+	
+	@DrawableRes
 	private var buttonIconRef = R.drawable.erfandp_logo_final_form
 	private var buttonIconRoundedCorner = true
-	private var buttonBackgroundTint: Int =
-		ContextCompat.getColor(context, R.color.buttondp_style_normal)
+	private var buttonBackgroundTint: Int = context.getColorCompat(R.color.buttondp_style_normal)
 	private var buttonBackgroundGradientStartColor =
-		ContextCompat.getColor(context, R.color.buttondp_style_gradient_start)
+		context.getColorCompat(R.color.buttondp_style_gradient_start)
 	private var buttonBackgroundGradientEndColor =
-		ContextCompat.getColor(context, R.color.buttondp_style_gradient_end)
+		context.getColorCompat(R.color.buttondp_style_gradient_end)
 	
 	
 	//views initialized in init block
@@ -114,20 +116,25 @@ class CustomizableGenericButton(
 	private fun initButtonStyles(buttonStyles: ButtonStyles) {
 		buttonRoot.background = when (buttonStyles) {
 			ButtonStyles.OUTLINED -> {
-				val drawable = ContextCompat.getDrawable(context, R.drawable.buttondp_style_outlined)
+				val drawable = ContextCompat.getDrawable(
+					context,
+					R.drawable.buttondp_style_outlined
+				)
 				drawable?.setTint(buttonBackgroundTint)
 				drawable
 			}
 			ButtonStyles.GRADIENT -> {
-				val gradientDrawable :GradientDrawable = ContextCompat.getDrawable(context, R.drawable
-					.buttondp_style_gradient) as GradientDrawable
-				gradientDrawable.colors = arrayOf(buttonBackgroundGradientStartColor,
-					buttonBackgroundGradientEndColor).toIntArray()
+				val gradientDrawable: GradientDrawable =
+					context.getDrawableCompat(R.drawable.buttondp_style_gradient) as GradientDrawable
+				gradientDrawable.colors = arrayOf(
+					buttonBackgroundGradientStartColor,
+					buttonBackgroundGradientEndColor
+				).toIntArray()
 				gradientDrawable
 				
 			}
 			ButtonStyles.NORMAL -> {
-				val drawable = ContextCompat.getDrawable(context, R.drawable.buttondp_style_normal)
+				val drawable = context.getDrawableCompat(R.drawable.buttondp_style_normal)
 				drawable?.setTint(buttonBackgroundTint)
 				drawable
 			}
@@ -135,7 +142,11 @@ class CustomizableGenericButton(
 	}
 	
 	private fun initButtonIcon() {
-		buttonIconView.setImageDrawable(AppCompatResources.getDrawable(context, buttonIconRef))
+		val drawable = context.getDrawableCompat(buttonIconRef)
+		if (buttonStyles == ButtonStyles.OUTLINED) {
+			drawable?.setTint(buttonBackgroundTint)
+		}
+		buttonIconView.setImageDrawable(drawable)
 		buttonIconView.clipToOutline = buttonIconRoundedCorner
 	}
 	
@@ -181,24 +192,23 @@ class CustomizableGenericButton(
 					ButtonStyles.GRADIENT -> {
 						val startTintColorResource = typedArray.getResourceId(
 							R.styleable.CustomizableGenericButton_button_gradient_start_tint,
-							R.color.buttondp_style_gradient_start)
-						buttonBackgroundGradientStartColor = ContextCompat.getColor(
-							context,
-							startTintColorResource)
+							R.color.buttondp_style_gradient_start
+						)
+						buttonBackgroundGradientStartColor =
+							context.getColorCompat(startTintColorResource)
 						val endTintColorResource = typedArray.getResourceId(
 							R.styleable.CustomizableGenericButton_button_gradient_end_tint,
 							R.color.buttondp_style_gradient_end
 						)
-						buttonBackgroundGradientEndColor = ContextCompat.getColor(
-							context,
-							endTintColorResource)
+						buttonBackgroundGradientEndColor =
+							context.getColorCompat(endTintColorResource)
 					}
 					else -> {
 						val tintColorResource = typedArray.getResourceId(
 							R.styleable.CustomizableGenericButton_button_background_tint,
 							R.color.buttondp_style_normal
 						)
-						buttonBackgroundTint = ContextCompat.getColor(context, tintColorResource)
+						buttonBackgroundTint = context.getColorCompat(tintColorResource)
 					}
 				}
 				

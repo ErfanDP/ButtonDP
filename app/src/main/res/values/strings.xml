@@ -3,4 +3,18 @@
     <string name="button_icon">Button Icon</string>
     <string name="button_title">Title</string>
     <string name="button_subtitle">subtitle</string>
+    <string name="username">UserName</string>
+    <string name="full_name">Full name</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="click_for_submit">click fo submitting the info</string>
+    <string name="toast_signup_succesful">SignUp Successful</string>
+    <string name="toast_signup_failed">This username already exist</string>
+    <string name="login">Login</string>
+    <string name="login_failed">username of password is wrong</string>
+    <string name="create_an_account">click to create an account</string>
+    <string name="signup_empty_field_error">Please fill the field</string>
+    <string name="signup_username_length_error">Username length can\'t be more than 20 chars</string>
+    <string name="home_welcome_text">Hello, %1$s!</string>
+    <string name="toast_logout">Times up!</string>
 </resources>
