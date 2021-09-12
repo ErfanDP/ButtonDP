@@ -8,10 +8,9 @@ import java.util.*
 class MainViewModel : ViewModel(){
 
 	val navigateLiveData = MutableLiveData<NavigationAction>()
-	val isFirstTime = UserRepository.isFirstTime()
 	
 	fun navigateToHome(from:NavigationDestinations, userId:UUID){
-		navigateLiveData.postValue(NavigationAction(from,NavigationDestinations.HomeDst(userId)))
+		navigateLiveData.postValue(NavigationAction(from,NavigationDestinations.Home(userId)))
 	}
 	
 	fun navigateToLogin(from:NavigationDestinations){
@@ -29,8 +28,7 @@ class MainViewModel : ViewModel(){
 		
 		class Login():NavigationDestinations()
 		
-		data class HomeDst(val userId: UUID ):NavigationDestinations()
-		class HomeSrc():NavigationDestinations()
+		data class Home(val userId: UUID=UUID.randomUUID() ):NavigationDestinations()
 	}
 	
 	

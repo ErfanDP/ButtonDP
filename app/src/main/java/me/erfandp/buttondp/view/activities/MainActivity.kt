@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import me.erfandp.buttondp.R
+import me.erfandp.buttondp.data.repositories.UserRepository
 import me.erfandp.buttondp.view.fragments.LoginFragmentDirections
 import me.erfandp.buttondp.viewModels.MainViewModel
 import me.erfandp.buttondp.viewModels.MainViewModel.NavigationDestinations
@@ -19,7 +20,7 @@ class MainActivity: AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
-		
+		UserRepository.initializeRepository(applicationContext)
 		initNavController()
 		initObservers()
 	}
@@ -33,13 +34,12 @@ class MainActivity: AppCompatActivity() {
 	private fun initObservers() {
 		viewModel.navigateLiveData.observe(this) {
 			when (it.to) {
-				is NavigationDestinations.HomeDst -> {
+				is NavigationDestinations.Home -> {
 					navigateHome(it.to.userId)
 				}
 				is NavigationDestinations.Signup -> navigateSignUp()
 				
 				is NavigationDestinations.Login -> navigateLogin()
-				
 			}
 		}
 	}

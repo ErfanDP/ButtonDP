@@ -1,36 +1,38 @@
 package me.erfandp.buttondp.data.repositories
 
+import android.content.Context
 import android.util.Log
+import androidx.room.Room
 import me.erfandp.buttondp.data.consts.LogTags
 import me.erfandp.buttondp.data.model.User
+import me.erfandp.buttondp.data.room.dao.UserDataBase
 import java.util.*
 import kotlin.collections.ArrayList
 
 object UserRepository {
-	private val userList: MutableList<User> = Collections.synchronizedList(ArrayList<User>())
-	
-	fun getUserById(uuid: UUID?): User? {
-		return userList.find {
-			it.id == uuid
-		}
+	private lateinit var userDataBase:UserDataBase
+	fun initializeRepository(context: Context){
+		userDataBase = Room.databaseBuilder(context.applicationContext,
+											UserDataBase::class.java,
+											"userDataBase").build()
 	}
 	
-	private fun getUserByUsername(userName:String):User?{
-		return userList.find {
-			it.userName == userName
-		}
+	suspend fun getUserById(uuid: UUID?): User? {
+		return userDataBase.userDao().findById(uuid.toString())
 	}
 	
-	fun checkLoginInfo(userName: String, password: String): User? {
-		return userList.find {
-			it.userName == userName && it.password == password
-		}
+	suspend fun getUserByUsername(userName:String):User?{
+		return userDataBase.userDao().findByUserName(userName)
 	}
 	
-	fun signUpUser(fullName:String,username:String,password:String):Boolean{
+	suspend fun checkLoginInfo(userName: String, password: String): User? {
+		return userDataBase.userDao().loginUser(userName,password)
+	}
+	
+	suspend fun signUpUser(fullName:String,username:String,password:String):Boolean{
 		return if(getUserByUsername(username) == null){
 			val user =User(fullName,username,password)
-			userList.add(user)
+			userDataBase.userDao().insertUser(user)
 			Log.d(LogTags.USER_REP,"user signed up $user")
 			true
 		}else{
@@ -39,8 +41,8 @@ object UserRepository {
 		}
 	}
 	
-	fun isFirstTime():Boolean{
-		return userList.size == 0
+	suspend fun isFirstTime():Boolean{
+		return userDataBase.userDao().countOfUsers() == 0
 	}
 	
 }

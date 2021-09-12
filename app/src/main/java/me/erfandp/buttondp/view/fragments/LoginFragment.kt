@@ -9,6 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.erfandp.buttondp.R
 import me.erfandp.buttondp.databinding.LoginFragmentBinding
 import me.erfandp.buttondp.utils.extentions.toast
@@ -49,16 +53,25 @@ class LoginFragment: Fragment() {
 	
 	
 	private fun onLoginButtonCLicked() {
-		val username = binding.textFieldLoginUsername.editText?.text.toString()
-		val password = binding.textFieldLoginPassword.editText?.text.toString()
-		val user = viewModel.checkLoginInfo(username, password)
-		if (user != null) {
-			context?.toast("welcome ${user.fullName}", Toast.LENGTH_SHORT)
-			activityViewModel.navigateToHome(
-				MainViewModel.NavigationDestinations.Login(),
-				user.id)
-		} else {
-			context?.toast(getString(R.string.login_failed), Toast.LENGTH_SHORT)
+		CoroutineScope(Dispatchers.Main).launch {
+			val username = binding.textFieldLoginUsername.editText?.text.toString()
+			val password = binding.textFieldLoginPassword.editText?.text.toString()
+			withContext(Dispatchers.IO){
+				val user = viewModel.checkLoginInfo(username, password)
+				if (user != null) {
+					withContext(Dispatchers.Main) {
+						context?.toast("welcome ${user.fullName}", Toast.LENGTH_SHORT)
+						activityViewModel.navigateToHome(
+							MainViewModel.NavigationDestinations.Login(),
+							user.id
+						)
+					}
+				} else {
+					withContext(Dispatchers.Main) {
+						context?.toast(getString(R.string.login_failed), Toast.LENGTH_SHORT)
+					}
+				}
+			}
 		}
 	}
 }

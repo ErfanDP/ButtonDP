@@ -4,8 +4,13 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.erfandp.buttondp.data.consts.LogTags
 import me.erfandp.buttondp.data.model.User
+import me.erfandp.buttondp.data.repositories.UserRepository
+import java.util.*
 
 class HomeViewModel: ViewModel() {
 	var activeUser: User? = null
@@ -58,5 +63,11 @@ class HomeViewModel: ViewModel() {
 	
 	fun stopForegroundCountDown() {
 		foregroundCountDown.cancel()
+	}
+	
+	fun initActiveUser(id:String?){
+		viewModelScope.launch(Dispatchers.IO) {
+			activeUser = UserRepository.getUserById(UUID.fromString(id))
+		}
 	}
 }

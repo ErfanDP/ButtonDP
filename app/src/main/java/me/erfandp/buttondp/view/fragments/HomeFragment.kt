@@ -39,14 +39,13 @@ class HomeFragment: Fragment() {
 	
 	private val logout = {
 		context?.toast(getString(R.string.toast_logout))
-		activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.HomeSrc())
+		activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.Home())
 	}
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
-			viewModel.activeUser = UserRepository.getUserById(
-				UUID.fromString(it.getString(ARGUMENT_USER_ID)))
+			viewModel.initActiveUser(it.getString(ARGUMENT_USER_ID))
 		}
 		
 	}
