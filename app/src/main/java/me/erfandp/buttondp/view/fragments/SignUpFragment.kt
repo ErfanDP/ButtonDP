@@ -9,9 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import me.erfandp.buttondp.R
 import me.erfandp.buttondp.databinding.SignUpFragmentBinding
 import me.erfandp.buttondp.utils.extentions.toast
@@ -53,7 +50,7 @@ class SignUpFragment: Fragment() {
 	
 	private fun signupResponseAction(response:Boolean){
 		if(response) {
-			context?.toast(getString(R.string.toast_signup_succesful),Toast.LENGTH_LONG)
+			context?.toast(getString(R.string.toast_signup_successful), Toast.LENGTH_LONG)
 			activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.Signup())
 		}else {
 			binding.textFieldSignupUsername.isErrorEnabled = true

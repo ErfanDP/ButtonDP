@@ -9,7 +9,7 @@
     <string name="register">Register</string>
     <string name="register_now">Register Now!</string>
     <string name="click_for_submit">click fo submitting the info</string>
-    <string name="toast_signup_succesful">SignUp Successful</string>
+    <string name="toast_signup_successful">SignUp Successful</string>
     <string name="signup_failed">This username already exist</string>
     <string name="login">Login</string>
     <string name="login_failed">username of password is wrong</string>
