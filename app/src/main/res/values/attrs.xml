@@ -26,7 +26,6 @@
             <enum name="only_title" value="0" />
             <enum name="with_subtitle" value="1" />
             <enum name="with_subtitle_and_icon" value="2" />
-            <enum name="with_icon" value="3" />
         </attr>
     </declare-styleable>
 </resources>

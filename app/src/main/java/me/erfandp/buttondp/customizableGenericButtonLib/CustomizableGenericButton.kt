@@ -166,7 +166,6 @@ class CustomizableGenericButton(
 		}
 	}
 	
-	
 	private fun initAttributes(attrs: AttributeSet?, context: Context) {
 		attrs?.let {
 			val typedArray =

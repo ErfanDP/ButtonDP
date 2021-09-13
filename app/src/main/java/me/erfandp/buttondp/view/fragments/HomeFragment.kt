@@ -37,10 +37,7 @@ class HomeFragment: Fragment() {
 	private val activityViewModel :MainViewModel by activityViewModels()
 	private lateinit var binding: HomeFragmentBinding
 	
-	private val logout = {
-		context?.toast(getString(R.string.toast_logout))
-		activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.Home())
-	}
+	
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -68,7 +65,7 @@ class HomeFragment: Fragment() {
 	private fun addObservers() {
 		viewModel.logoutCountDownLiveData.observe(viewLifecycleOwner) {
 			if (it) {
-				logout.invoke()
+				logout()
 			}
 		}
 	}
@@ -99,6 +96,11 @@ class HomeFragment: Fragment() {
 	private fun initView() {
 		binding.homeText.text =
 			resources.getString(R.string.home_welcome_text, viewModel.getUserFullName())
+	}
+	
+	private fun logout() {
+		context?.toast(getString(R.string.toast_logout))
+		activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.Home())
 	}
 	
 	
