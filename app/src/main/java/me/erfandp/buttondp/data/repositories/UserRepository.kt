@@ -17,6 +17,10 @@ object UserRepository {
 											"userDataBase").build()
 	}
 	
+	suspend fun clearDataBase(){
+		userDataBase.userDao().deleteAllUsers()
+	}
+	
 	suspend fun getUserById(uuid: UUID?): User? {
 		return userDataBase.userDao().findById(uuid.toString())
 	}
@@ -29,10 +33,10 @@ object UserRepository {
 		return userDataBase.userDao().loginUser(userName,password)
 	}
 	
-	suspend fun signUpUser(fullName:String,username:String,password:String):Boolean{
+	suspend fun signUpUser(fullName:String,username:String,password:String,id:UUID = UUID.randomUUID()):Boolean{
 		return if(getUserByUsername(username) == null){
-			val user =User(fullName,username,password)
-			userDataBase.userDao().insertUser(user)
+			val user =User(fullName,username,password,id)
+			insertUser(user)
 			Log.d(LogTags.USER_REP,"user signed up $user")
 			true
 		}else{
@@ -40,6 +44,8 @@ object UserRepository {
 			false
 		}
 	}
+	
+	private suspend fun insertUser(user: User) = userDataBase.userDao().insertUser(user)
 	
 	suspend fun isFirstTime():Boolean{
 		return userDataBase.userDao().countOfUsers() == 0
