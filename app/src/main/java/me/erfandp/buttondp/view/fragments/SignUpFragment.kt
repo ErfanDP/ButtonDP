@@ -52,13 +52,13 @@ class SignUpFragment: Fragment() {
 	}
 	
 	private fun signupResponseAction(response:Boolean){
-		val textMsg = if(response) {
+		if(response) {
+			context?.toast(getString(R.string.toast_signup_succesful),Toast.LENGTH_LONG)
 			activityViewModel.navigateToLogin(MainViewModel.NavigationDestinations.Signup())
-			getString(R.string.toast_signup_succesful)
 		}else {
-			getString(R.string.toast_signup_failed)
+			binding.textFieldSignupUsername.isErrorEnabled = true
+			binding.textFieldSignupUsername.error = getString(R.string.signup_failed)
 		}
-		context?.toast(textMsg,Toast.LENGTH_LONG)
 	}
 	
 	private fun signUpUser(){
