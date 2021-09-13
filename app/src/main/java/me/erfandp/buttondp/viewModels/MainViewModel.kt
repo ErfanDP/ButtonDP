@@ -3,11 +3,12 @@ package me.erfandp.buttondp.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import me.erfandp.buttondp.data.repositories.UserRepository
+import me.erfandp.buttondp.utils.SingleEventLiveData
 import java.util.*
 
 class MainViewModel : ViewModel(){
 
-	val navigateLiveData = MutableLiveData<NavigationAction>()
+	val navigateLiveData = SingleEventLiveData<NavigationAction>()
 	
 	fun navigateToHome(from:NavigationDestinations, userId:UUID){
 		navigateLiveData.postValue(NavigationAction(from,NavigationDestinations.Home(userId)))
